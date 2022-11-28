@@ -53,7 +53,7 @@ am.visualization(control_group='hs300')
 print(am.compare.pct_change().tail(5))
 #%%
 dingpan_plots.run_all()
-zmlc = dingpan_plots.zh_us_interests_diff()
+zmlc = dingpan_plots.zh_us_interests_diff(start_date='2016-01-01')
 zmlc_z = (zmlc-zmlc.mean())/zmlc.std()
 sz50_predict = (zmlc_z.z[-1]*zmlc.std().sz50)+zmlc.mean().sz50
 print(sz50_predict)
