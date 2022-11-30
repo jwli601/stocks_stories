@@ -7,7 +7,6 @@ Created on Thu Nov 10 09:20:23 2022
 
 import cv_strategy
 import dingpan_plots
-#%%
 # ETF持仓
 pool_1=['512660','512800',# 军工、银行
         '513330','515220',# 恒生科技、煤炭
@@ -24,6 +23,8 @@ pool_1=['512660','512800',# 军工、银行
 
 #       '563000','510300','510500',# 中国A50，hs300, zz500
        ]
+#%%
+
 a = cv_strategy.cv_strategy(pool_1)
 a.get_close(ktype_='D')
 # 价格修正
