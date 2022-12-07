@@ -61,3 +61,12 @@ print(sz50_predict)
 dingpan_plots.sz50_over_zz500()
 
 print(dingpan_plots.zh_us_interests_diff())
+#%%
+import pandas as pd
+hs300_list = pd.read_excel(r'D:\jwli\stocks_stories\hs300.xlsx',sheet_name=1).dropna()
+hs300_list = [i[:6] for i in hs300_list['证券代码']]
+hs = cv_strategy.cv_strategy(hs300_list)
+hs.get_close()
+hs.close = hs.close.T.dropna().T
+hs.run()
+hs.visualization()
