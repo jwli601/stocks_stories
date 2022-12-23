@@ -118,7 +118,7 @@ def sz50_over_zz500(start_date = ''):
     plt.show()
     
 def hs300_streamline():
-    hs300_list = pd.read_excel(r'D:\jwli\stocks_stories\hs300.xlsx',sheet_name=1).dropna()
+    hs300_list = pd.read_excel(r'./hs300.xlsx',sheet_name=1).dropna()
     hs300_list = [i[:6] for i in hs300_list['证券代码']]
     hs300_pool = cv_strategy.cv_strategy(hs300_list)
     hs300_pool.get_close()
