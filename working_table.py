@@ -70,7 +70,7 @@ import pandas as pd
 hs300_list = pd.read_excel(r'D:\jwli\stocks_stories\hs300.xlsx',sheet_name=1).dropna()
 hs300_list = [i[:6] for i in hs300_list['证券代码']]
 hs = cv_strategy.cv_strategy(hs300_list)
-hs.get_close()
+hs.get_close(ktype_='D',date_start='2018-10-01')
 hs.close = hs.close.T.dropna().T
-hs.run()
+hs.run(operation_pct_in=4/len(hs.stock_pool),period=50)
 hs.visualization()
