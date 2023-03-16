@@ -37,7 +37,7 @@ a.close.loc[:'2022-12-26','515220'] = a.close.loc[:'2022-12-26','515220']/2.187*
 a.run(operation_pct_in=4/len(a.stock_pool),
       operation_pct_out=0.5,
       operation_pct_clr=1,
-      period=44)
+      period=50)
 a.visualization(control_group='hs300')
 print(a.compare.pct_change().tail(5))
 #%%
@@ -70,7 +70,12 @@ import pandas as pd
 hs300_list = pd.read_excel(r'D:\jwli\stocks_stories\hs300.xlsx',sheet_name=1).dropna()
 hs300_list = [i[:6] for i in hs300_list['证券代码']]
 hs = cv_strategy.cv_strategy(hs300_list)
-hs.get_close(ktype_='D',date_start='2018-10-01')
+hs.get_close(ktype_='M',date_start='2020-10-01')
 hs.close = hs.close.T.dropna().T
-hs.run(operation_pct_in=4/len(hs.stock_pool),period=50)
+hs.run(operation_pct_in=4/len(hs.stock_pool),period=2)
 hs.visualization()
+#%%
+aa  =dingpan_plots.stock_bond_rolling()
+aa.std()/aa.mean()
+#%%
+dingpan_plots.stock_bond_rolling(start_date='1996-01-01')
