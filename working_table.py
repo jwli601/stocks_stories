@@ -62,7 +62,7 @@ zmlc = dingpan_plots.zh_us_interests_diff(start_date='2016-01-01')
 zmlc_z = (zmlc-zmlc.mean())/zmlc.std()
 sz50_predict = (zmlc_z.z[-1]*zmlc.std().sz50)+zmlc.mean().sz50
 print(sz50_predict)
-dingpan_plots.sz50_over_zz500()
+dingpan_plots.sz50_over_zz500(start='2013-01-01',end='2015-01-01')
 
 print(dingpan_plots.zh_us_interests_diff())
 #%%
@@ -70,9 +70,9 @@ import pandas as pd
 hs300_list = pd.read_excel(r'D:\jwli\stocks_stories\hs300.xlsx',sheet_name=1).dropna()
 hs300_list = [i[:6] for i in hs300_list['证券代码']]
 hs = cv_strategy.cv_strategy(hs300_list)
-hs.get_close(ktype_='M',date_start='2020-10-01')
+hs.get_close(ktype_='D',)
 hs.close = hs.close.T.dropna().T
-hs.run(operation_pct_in=4/len(hs.stock_pool),period=2)
+hs.run(operation_pct_in=4/len(hs.stock_pool),period=50)
 hs.visualization()
 #%%
 aa  =dingpan_plots.stock_bond_rolling()

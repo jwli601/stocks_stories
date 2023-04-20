@@ -92,9 +92,9 @@ def stock_bond_rolling(start_date=''):
     plt.title('股债轮动模型 corr = {}'.format(round(df_rocz.corr().loc['sz50','bond_index'],3)))
     plt.show()
     return df
-def sz50_over_zz500(start_date = ''):
-    sz50 = ts.get_k_data('sz50',start=start_date).set_index('date')
-    zz500=ts.get_k_data('399905',start=start_date).set_index('date')
+def sz50_over_zz500(start_date = '',end_date = ''):
+    sz50 = ts.get_k_data('sz50',start=start_date, end=end_date).set_index('date')
+    zz500=ts.get_k_data('399905',start=start_date, end=end_date).set_index('date')
     df = pd.DataFrame({'sz50':sz50.close, 'zz500':zz500.close}).dropna()
     df['sz50/zz500'] = df.sz50/df.zz500
     df = df/df.iloc[0]
