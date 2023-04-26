@@ -49,6 +49,7 @@ am.close.loc[:'2021-05-14','512690'] = am.close.loc[:'2021-05-14','512690']/2.64
 am.close.loc['2021-05-15':'2021-12-30','512690'] = am.close.loc['2021-05-15':'2021-12-30','512690']/1.323*0.973
 am.close.loc[:'2021-06-25','512010'] = am.close.loc[:'2021-06-25','512010']/3.206*0.836
 am.close.loc[:'2022-12-26','515220'] = am.close.loc[:'2022-12-26','515220']/2.187*2.147
+am.close.loc['2023-03-31','513030'] = 1.157
 
 am.run(operation_pct_in=4/len(am.stock_pool),
       operation_pct_out=0.5,
@@ -62,7 +63,7 @@ zmlc = dingpan_plots.zh_us_interests_diff(start_date='2016-01-01')
 zmlc_z = (zmlc-zmlc.mean())/zmlc.std()
 sz50_predict = (zmlc_z.z[-1]*zmlc.std().sz50)+zmlc.mean().sz50
 print(sz50_predict)
-dingpan_plots.sz50_over_zz500(start='2013-01-01',end='2015-01-01')
+dingpan_plots.sz50_over_zz500()#start_date='2013-01-01',end_date='2016-01-01')
 
 print(dingpan_plots.zh_us_interests_diff())
 #%%
