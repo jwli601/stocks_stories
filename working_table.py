@@ -19,10 +19,26 @@ pool_1=['512660','512800',# 军工、银行
         '159985',#'511260',# 豆粕期货，十年国债ETF
         '159941', '513030',#'513080',#'513880',#,         # nasdaq,德国，法国cac40，日本225 
         '512980','512720',         # 传媒, 计算机
-        '513360',                  # 教育
+        '513360','159611'                  # 教育
 
 #       '563000','510300','510500',# 中国A50，hs300, zz500
        ]
+#%%
+
+pool_2 = ['159865','159870','502023','512400','159997','159996','159928','159936','161726',
+          '159611','516530','512200','159766','159745','165525','512580','512660','159998',
+          '512980','515880','512800','512070','516110','161032','159930','512580']
+am2 = cv_strategy.cv_strategy(pool_2)
+am2.get_close(ktype_='D')
+am2.close.loc[:'2021-06-24','159928'] = am2.close.loc[:'2021-06-24','159928']/4.94*1.235
+am2.close.loc[:'2021-09-10','512070'] = am2.close.loc[:'2021-09-10','512070']/2.318*0.773
+
+am2.run(operation_pct_in=4/len(am2.stock_pool),
+      operation_pct_out=0.5,
+      operation_pct_clr=1,
+      period=42)
+am2.visualization(control_group='hs300')
+print(am2.compare.pct_change().tail(5))
 #%%
 
 a = cv_strategy.cv_strategy(pool_1)
@@ -41,6 +57,12 @@ a.run(operation_pct_in=4/len(a.stock_pool),
 a.visualization(control_group='hs300')
 print(a.compare.pct_change().tail(5))
 #%%
+import numpy as np
+s = a.close.corr()
+for i in s.columns:
+    print(i)
+    print(np.percentile(s[i],[10,90]))
+#%%
 am = cv_strategy.cv_strategy(pool_1)
 am.get_close(ktype_='M')
 # 价格修正
@@ -51,12 +73,17 @@ am.close.loc[:'2021-06-25','512010'] = am.close.loc[:'2021-06-25','512010']/3.20
 am.close.loc[:'2022-12-26','515220'] = am.close.loc[:'2022-12-26','515220']/2.187*2.147
 am.close.loc['2023-03-31','513030'] = 1.157
 
+#%%
+
+
 am.run(operation_pct_in=4/len(am.stock_pool),
       operation_pct_out=0.5,
       operation_pct_clr=1,
       period=2)
 am.visualization(control_group='hs300')
 print(am.compare.pct_change().tail(5))
+#%%
+c = am.close.corr()
 #%%
 dingpan_plots.run_all()
 zmlc = dingpan_plots.zh_us_interests_diff(start_date='2016-01-01')
