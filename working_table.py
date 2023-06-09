@@ -19,7 +19,7 @@ pool_1=['512660','512800',# 军工、银行
         '159985',#'511260',# 豆粕期货，十年国债ETF
         '159941', '513030',#'513080',#'513880',#,         # nasdaq,德国，法国cac40，日本225 
         '512980','512720',         # 传媒, 计算机
-        '513360',#'159611'                  # 教育
+        '513360','159611'                  # 教育
 
 #       '563000','510300','510500',# 中国A50，hs300, zz500
        ]
@@ -90,7 +90,7 @@ zmlc = dingpan_plots.zh_us_interests_diff(start_date='2016-01-01')
 zmlc_z = (zmlc-zmlc.mean())/zmlc.std()
 sz50_predict = (zmlc_z.z[-1]*zmlc.std().sz50)+zmlc.mean().sz50
 print(sz50_predict)
-dingpan_plots.sz50_over_zz500(start_date='2013-01-01',end_date='2023-05-01')
+dingpan_plots.sz50_over_zz500()#start_date='2013-01-01',end_date='2023-05-01')
 
 print(dingpan_plots.zh_us_interests_diff())
 #%%
