@@ -19,7 +19,7 @@ pool_1=['512660','512800',# 军工、银行
         '159985',#'511260',# 豆粕期货，十年国债ETF
         '159941', '513030',#'513080',#'513880',#,         # nasdaq,德国，法国cac40，日本225 
         '512980','512720',         # 传媒, 计算机
-        '513360','159611','515880',                  # 教育
+        '513360','159611',#'515880',                  # 教育
 
 #       '563000','510300','510500',# 中国A50，hs300, zz500
        ]
@@ -47,7 +47,7 @@ am2.visualization(control_group='hs300')
 print(am2.compare.pct_change().tail(5))
 #%%
 
-a = cv_strategy.cv_strategy(p3)
+a = cv_strategy.cv_strategy(pool_1)
 a.get_close(ktype_='D')
 # 价格修正
 a.close.loc['2022-07-05':,'159941']=a.close.loc['2022-07-05':,'159941']/0.604*2.416
@@ -70,7 +70,7 @@ for i in s.columns:
     print(i)
     print(np.percentile(s[i],[10,90]))
 #%%
-am = cv_strategy.cv_strategy(p3)
+am = cv_strategy.cv_strategy(pool_1)
 am.get_close(ktype_='M')
 # 价格修正
 am.close.loc['2022-07-05':,'159941']=am.close.loc['2022-07-05':,'159941']/0.604*2.416
@@ -81,8 +81,6 @@ am.close.loc[:'2022-12-26','515220'] = am.close.loc[:'2022-12-26','515220']/2.18
 am.close.loc['2023-03-31','513030'] = 1.157
 
 #%%
-
-
 am.run(operation_pct_in=4/len(am.stock_pool),
       operation_pct_out=0.5,
       operation_pct_clr=1,
