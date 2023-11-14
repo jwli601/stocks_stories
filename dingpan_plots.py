@@ -41,7 +41,7 @@ def sw_heatmap():
     ax.set_yticklabels(sw_data_v.index, rotation=0,fontsize=6)
     # plt.yticks(sw_data_v.columns)
     plt.show()
-    
+    return sw_data
 def zh_us_interests_diff(start_date=''):
 
     hs300 = ts.get_k_data('hs300',start=start_date).set_index('date')
