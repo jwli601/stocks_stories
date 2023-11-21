@@ -141,11 +141,11 @@ plt.legend()
 c = am.close.corr()
 #%%
 dingpan_plots.run_all()
-zmlc = dingpan_plots.zh_us_interests_diff(start_date='2010-01-01')
+zmlc = dingpan_plots.zh_us_interests_diff()#start_date='2010-01-01')
 zmlc_z = (zmlc-zmlc.mean())/zmlc.std()
 sz50_predict = (zmlc_z.z[-1]*zmlc.std().sz50)+zmlc.mean().sz50
 print(sz50_predict)
-dingpan_plots.sz50_over_zz500(start_date='2003-01-01')
+dingpan_plots.sz50_over_zz500()#start_date='2003-01-01')
 dingpan_plots.stock_bond_rolling()#start_date='1996-01-01')
 
 print(dingpan_plots.zh_us_interests_diff())
