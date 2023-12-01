@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 # ETF持仓
 pool_1=['512660','512800',# 军工、银行
-        '513330','515220',# 恒生科技、煤炭
+        '513180','515220',# 恒生科技、煤炭
         '159996','512010',# 家电、医药
         '159825','159865',# 农业、养殖
         '159732','159995',# 消费电子、芯片
@@ -45,17 +45,17 @@ am.get_close(ktype_='M',)
 # 价格修正：由于tushare读取的ETF数据未进行复权，因此需要手动对数据进行复权。
 
 # 纳指etf复权
-am.close.loc[:'2022-07-05','159941'][:-1] = am.close.loc[:'2022-07-05','159941'][:-1]/4
+am.close.loc[:'2022-07-29','159941'][:-1] = am.close.loc[:'2022-07-29','159941'][:-1]/4
 # 酒etf复权
-am.close.loc[:'2021-05-17','512690'][:-1] = am.close.loc[:'2021-05-17','512690'][:-1]/2
+am.close.loc[:'2021-05-31','512690'][:-1] = am.close.loc[:'2021-05-31','512690'][:-1]/2
 am.close.loc[:'2021-12-31','512690'][:-1] = am.close.loc[:'2021-12-31','512690'][:-1]-0.35
 # 医药etf复权
-am.close.loc[:'2021-06-28','512010'][:-1] = am.close.loc[:'2021-06-28','512010'][:-1]/4
+am.close.loc[:'2021-06-30','512010'][:-1] = am.close.loc[:'2021-06-30','512010'][:-1]/4
 # 煤炭etf复权
-am.close.loc[:'2021-12-27','515220'][:-1] = am.close.loc[:'2021-12-27','515220'][:-1]-0.8
-am.close.loc[:'2022-12-27','515220'][:-1] = am.close.loc[:'2022-12-27','515220'][:-1]-0.4
+am.close.loc[:'2021-12-31','515220'][:-1] = am.close.loc[:'2021-12-31','515220'][:-1]-0.8
+am.close.loc[:'2022-12-30','515220'][:-1] = am.close.loc[:'2022-12-30','515220'][:-1]-0.4
 # 计算机etf分红
-am.close.loc[:'2023-09-25','512720'][:-1] = am.close.loc[:'2023-09-25','512720'][:-1]-0.48
+am.close.loc[:'2023-09-28','512720'][:-1] = am.close.loc[:'2023-09-28','512720'][:-1]-0.048
 
 am.close.loc['2023-03-31','513030'] = 1.157
 #___________________________________________
@@ -81,7 +81,7 @@ am.run(operation_pct_in=4/len(am.stock_pool),
       operation_pct_clr=1,
       period=2)
 #%%
-startdate='2023-10-31'
+startdate='2023-11-30'
 dec_dailyreturn = a.returns.dropna().loc[startdate:]
 df_model = a.weight.loc[am.weight.iloc[-2].name:]
 df = pd.DataFrame(index = df_model.index,columns=df_model.columns)
@@ -110,7 +110,7 @@ plt.xticks(dfs.index,rotation=90)
 plt.legend()
 plt.show()
 #——————
-pt = df.T.sort_values(startdate,ascending=False).iloc[:12].T
+pt = df.T.sort_values(startdate,ascending=False).iloc[:14].T
 aa = pt.columns.to_list()
 aa.remove('cash')
 pt=pt[aa]
@@ -129,7 +129,7 @@ ax2.set_ylabel('成分ETF回报率')
 fig.suptitle('成分ETF表现',fontsize=20)
 plt.show()
 #----
-qq = ((am.compare/(am.compare.loc['2022-12-30'])).iloc[-12:])
+qq = ((am.compare/(am.compare.loc['2022-12-30'])).iloc[-13:])
 plt.plot(qq.strategy,label='cv_m',lw=5)
 plt.plot(qq.hs300,label='hs300')
 plt.title('cv_m策略表现')
@@ -141,11 +141,11 @@ plt.legend()
 c = am.close.corr()
 #%%
 dingpan_plots.run_all()
-zmlc = dingpan_plots.zh_us_interests_diff()#start_date='2010-01-01')
+zmlc = dingpan_plots.zh_us_interests_diff(start_date='2020-01-01')
 zmlc_z = (zmlc-zmlc.mean())/zmlc.std()
 sz50_predict = (zmlc_z.z[-1]*zmlc.std().sz50)+zmlc.mean().sz50
 print(sz50_predict)
-dingpan_plots.sz50_over_zz500()#start_date='2003-01-01')
+dingpan_plots.sz50_over_zz500(start_date='2003-01-01')
 dingpan_plots.stock_bond_rolling(start_date='2006-01-01')
 
 print(dingpan_plots.zh_us_interests_diff())
@@ -154,9 +154,9 @@ import pandas as pd
 hs300_list = pd.read_excel(r'D:\jwli\stocks_stories\hs300.xlsx',sheet_name=1).dropna()
 hs300_list = [i[:6] for i in hs300_list['证券代码']]
 hs = cv_strategy.cv_strategy(hs300_list)
-hs.get_close(ktype_='M',date_start='2012-10-01')
+hs.get_close(ktype_='W',date_start='2012-10-01',autype_='hfq')
 hs.close = hs.close.T.dropna().T
-hs.run(operation_pct_in=4/len(hs.stock_pool),period=2)
+hs.run(operation_pct_in=4/len(hs.stock_pool),period=9)
 hs.visualization()
 #%%
 aa  =dingpan_plots.stock_bond_rolling()
