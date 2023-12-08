@@ -174,7 +174,7 @@ class cv_strategy:
             if i == 0:
                 return i
             j=np.argmax(x[:i])
-            return (x[j]-x[i])/x[j]
+            return (x[j]-x[i])/x[j],i,j
         self.max_drawdown = max_drawdown(self.net_value)
     def visualization(self,control_group='hs300',):
         self.control_group=control_group

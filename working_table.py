@@ -40,8 +40,7 @@ for i in s.columns:
 am = cv_strategy.cv_strategy(pool_1)
 am.get_close(ktype_='M')
 # 价格修正
-am = cv_strategy.cv_strategy(pool_1)
-am.get_close(ktype_='M',)
+
 # 价格修正：由于tushare读取的ETF数据未进行复权，因此需要手动对数据进行复权。
 
 # 纳指etf复权
@@ -99,7 +98,7 @@ dfs['ex'] = dfs.cv_m/dfs.hs300
 dfs=dfs/dfs.iloc[0]
 #%%
 am.visualization(control_group='hs300')
-
+# a.visualization(control_group='hs300')
 plt.style.use('ggplot')
 plt.figure(figsize=[10,6],dpi=80)
 plt.title('cv_m 策略与沪深300指数的走势')
@@ -145,7 +144,7 @@ zmlc = dingpan_plots.zh_us_interests_diff(start_date='2020-01-01')
 zmlc_z = (zmlc-zmlc.mean())/zmlc.std()
 sz50_predict = (zmlc_z.z[-1]*zmlc.std().sz50)+zmlc.mean().sz50
 print(sz50_predict)
-dingpan_plots.sz50_over_zz500(start_date='2003-01-01')
+dingpan_plots.sz50_over_zz500()#start_date='2023-01-01')
 dingpan_plots.stock_bond_rolling(start_date='2006-01-01')
 
 print(dingpan_plots.zh_us_interests_diff())
