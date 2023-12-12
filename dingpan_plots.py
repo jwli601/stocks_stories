@@ -177,6 +177,20 @@ def hs300_streamline():
             ax.set_ylim(-.5,.5)
             ax.arrow(x=a1x[i],y=a1y[i],dx=a1dx[i],dy=a1dy[i],width=0.0005,head_width=0.005,color=colors[j-1])
             ax.set_title('向第{}象限移动:{}只'.format(j,len(a1)))
+
+def pathline(code,prd=45,start_date='',end_date='',ktype_='D',autype_='qfq'):
+    
+    target = ts.get_k_data(code,start=start_date,end=end_date,ktype=ktype_,autype=autype_).set_index('date')['close']
+    
+    target_cv = target.rolling(45).std()/target.rolling(45).mean()
+    target_cvp = target_cv.shift(1)
+    target_dcv = target_cv - target_cvp
+    target_rt = target.pct_change(45)
+    target_rtp = target_rt.shift(1)
+    target_drt = target_rt-target_rtp
+    for i in range(len(target_cv)):
+        plt.arrow(x=target_cvp[i],y = target_rtp[i],dx=target_dcv[i], dy=target_drt[i],length_includes_head=True,width=target_rtp[i]/300)
+    return target_cv,target_rt
 def run_all():
     sw_heatmap()
     zh_us_interests_diff()

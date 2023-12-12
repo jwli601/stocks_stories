@@ -25,7 +25,7 @@ pool_1=['512660','512800',# 军工、银行
         '159941', '513030',#'513080',#'513880',#,         # nasdaq,德国，法国cac40，日本225 
         '512980','512720',         # 传媒, 计算机
         '513360','159611',                  # 教育,电力
-#        '515880',          # 通讯  
+        '515880',          # 通讯  
 #       '563000','510300','510500',# 中国A50，hs300, zz500
        ]
 
@@ -109,7 +109,7 @@ plt.xticks(dfs.index,rotation=90)
 plt.legend()
 plt.show()
 #——————
-pt = df.T.sort_values(startdate,ascending=False).iloc[:14].T
+pt = df.T.sort_values(startdate,ascending=False).iloc[:13].T
 aa = pt.columns.to_list()
 aa.remove('cash')
 pt=pt[aa]
@@ -137,7 +137,7 @@ plt.legend()
 
 
 #%%
-c = am.close.corr()
+c = a.close.corr()
 #%%
 dingpan_plots.run_all()
 zmlc = dingpan_plots.zh_us_interests_diff(start_date='2020-01-01')
@@ -145,7 +145,7 @@ zmlc_z = (zmlc-zmlc.mean())/zmlc.std()
 sz50_predict = (zmlc_z.z[-1]*zmlc.std().sz50)+zmlc.mean().sz50
 print(sz50_predict)
 dingpan_plots.sz50_over_zz500()#start_date='2023-01-01')
-dingpan_plots.stock_bond_rolling(start_date='2006-01-01')
+dingpan_plots.stock_bond_rolling()#start_date='2006-01-01')
 
 print(dingpan_plots.zh_us_interests_diff())
 #%%
