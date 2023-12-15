@@ -139,7 +139,7 @@ zmlc = dingpan_plots.zh_us_interests_diff(start_date='2022-01-01')
 zmlc_z = (zmlc-zmlc.mean())/zmlc.std()
 sz50_predict = (zmlc_z.z[-1]*zmlc.std().sz50)+zmlc.mean().sz50
 print(sz50_predict)
-dingpan_plots.sz50_over_zz500(start_date='2022-07-01')
+dingpan_plots.sz50_over_zz500()#start_date='2012-07-01')
 dingpan_plots.stock_bond_rolling()#start_date='2006-01-01')
 
 print(dingpan_plots.zh_us_interests_diff())
@@ -148,7 +148,7 @@ import pandas as pd
 hs300_list = pd.read_excel(r'D:\jwli\stocks_stories\hs300.xlsx',sheet_name=1).dropna()
 hs300_list = [i[:6] for i in hs300_list['证券代码']]
 hs = cv_strategy.cv_strategy(hs300_list)
-hs.get_close(ktype_='W',date_start='2012-10-01',autype_='hfq')
+hs.get_close(ktype_='W',date_start='2016-10-01',autype_='hfq')
 hs.close = hs.close.T.dropna().T
 hs.run(operation_pct_in=4/len(hs.stock_pool),period=9)
 hs.visualization()
@@ -158,4 +158,13 @@ aa.std()/aa.mean()
 #%%
 swdata = dingpan_plots.sw_heatmap()
 swdatacc = swdata.corr()
-
+#%%
+a1n='513330'
+a2n='513180'
+a1 = ts.get_k_data(a1n).set_index('date')['close']
+a2 = ts.get_k_data(a2n).set_index('date')['close']
+a3=pd.concat([a1,a2],axis=1).dropna()
+a3.columns=[a1n,a2n]
+a3['compare']=(a3.iloc[:,0])/(a3.iloc[:,1])
+a3=a3/a3.iloc[0]
+a3.plot()
