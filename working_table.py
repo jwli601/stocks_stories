@@ -25,7 +25,7 @@ pool_1=['512660','512800',# 军工、银行
         '159941', '513030',#'513080',#'513880',#,         # nasdaq,德国，法国cac40，日本225 
         '512980','512720',         # 传媒, 计算机
         '513360','159611',                  # 教育,电力
-#        '515880',          # 通讯  
+        '515880',          # 通讯  
 #       '563000','510300','510500',# 中国A50，hs300, zz500
        ]
 
@@ -46,10 +46,12 @@ am.close.loc[:'2021-12-31','512690'][:-1] = am.close.loc[:'2021-12-31','512690']
 # 医药etf复权
 am.close.loc[:'2021-06-30','512010'][:-1] = am.close.loc[:'2021-06-30','512010'][:-1]/4
 # 煤炭etf复权
-am.close.loc[:'2021-12-31','515220'][:-1] = am.close.loc[:'2021-12-31','515220'][:-1]-0.8
-am.close.loc[:'2022-12-30','515220'][:-1] = am.close.loc[:'2022-12-30','515220'][:-1]-0.4
+am.close.loc[:'2021-12-31','515220'][:-1] = am.close.loc[:'2021-12-31','515220'][:-1]-0.08
+am.close.loc[:'2022-12-30','515220'][:-1] = am.close.loc[:'2022-12-30','515220'][:-1]-0.04
+am.close.loc[:'2023-12-28','515220'][:-1] = am.close.loc[:'2023-12-28','515220'][:-1]-0.05
 # 计算机etf分红
 am.close.loc[:'2023-09-28','512720'][:-1] = am.close.loc[:'2023-09-28','512720'][:-1]-0.048
+am.close.loc[:'2023-12-28','512720'][:-1] = am.close.loc[:'2023-12-28','512720'][:-1]-0.048
 
 am.close.loc['2023-03-31','513030'] = 1.157
 #___________________________________________
@@ -63,13 +65,19 @@ a.close.loc[:'2021-12-31','512690'][:-1] = a.close.loc[:'2021-12-31','512690'][:
 # 医药etf复权
 a.close.loc[:'2021-06-28','512010'][:-1] = a.close.loc[:'2021-06-28','512010'][:-1]/4
 # 煤炭etf复权
-a.close.loc[:'2021-12-27','515220'][:-1] = a.close.loc[:'2021-12-27','515220'][:-1]-0.8
-a.close.loc[:'2022-12-27','515220'][:-1] = a.close.loc[:'2022-12-27','515220'][:-1]-0.4
+a.close.loc[:'2021-12-27','515220'][:-1] = a.close.loc[:'2021-12-27','515220'][:-1]-0.08
+a.close.loc[:'2022-12-27','515220'][:-1] = a.close.loc[:'2022-12-27','515220'][:-1]-0.04
+am.close.loc[:'2023-12-28','515220'][:-1] = am.close.loc[:'2023-12-28','515220'][:-1]-0.05
 # 计算机etf分红
-a.close.loc[:'2023-09-25','512720'][:-1] = a.close.loc[:'2023-09-25','512720'][:-1]-0.48
+a.close.loc[:'2023-09-25','512720'][:-1] = a.close.loc[:'2023-09-25','512720'][:-1]-0.048
+a.close.loc[:'2023-12-25','512720'][:-1] = a.close.loc[:'2023-12-25','512720'][:-1]-0.048
+
 a.close.loc['2023-03-31','513030'] = 1.157
 #%%
-a.run()
+a.run(operation_pct_in=4/len(am.stock_pool),
+      operation_pct_out=0.5,
+      operation_pct_clr=1,
+      period=45)
 am.run(operation_pct_in=4/len(am.stock_pool),
       operation_pct_out=0.5,
       operation_pct_clr=1,
@@ -104,7 +112,7 @@ plt.xticks(dfs.index,rotation=90)
 plt.legend()
 plt.show()
 #——————
-pt = df.T.sort_values(startdate,ascending=False).iloc[:13].T
+pt = df.T.sort_values(startdate,ascending=False).iloc[:10].T
 aa = pt.columns.to_list()
 aa.remove('cash')
 pt=pt[aa]
@@ -135,11 +143,11 @@ plt.legend()
 c = a.close.corr()
 #%%
 dingpan_plots.run_all()
-zmlc = dingpan_plots.zh_us_interests_diff(start_date='2022-01-01')
+zmlc = dingpan_plots.zh_us_interests_diff()
 zmlc_z = (zmlc-zmlc.mean())/zmlc.std()
 sz50_predict = (zmlc_z.z[-1]*zmlc.std().sz50)+zmlc.mean().sz50
 print(sz50_predict)
-dingpan_plots.sz50_over_zz500()#start_date='2012-07-01')
+dingpan_plots.sz50_over_zz500(start_date='2012-07-01')
 dingpan_plots.stock_bond_rolling()#start_date='2006-01-01')
 
 print(dingpan_plots.zh_us_interests_diff())
@@ -152,6 +160,12 @@ hs.get_close(ktype_='W',date_start='2016-10-01',autype_='hfq')
 hs.close = hs.close.T.dropna().T
 hs.run(operation_pct_in=4/len(hs.stock_pool),period=9)
 hs.visualization()
+
+# hs2 = cv_strategy.cv_strategy(hs300_list)
+# hs2.get_close(ktype_='W',date_start='2016-10-01',autype_='hfq')
+# hs2.close = hs.close.T.dropna().T
+# hs2.run(operation_pct_in=0,operation_pct_out=0,operation_pct_clr=0,period=9)
+# hs2.visualization()
 #%%
 aa  =dingpan_plots.stock_bond_rolling()
 aa.std()/aa.mean()
